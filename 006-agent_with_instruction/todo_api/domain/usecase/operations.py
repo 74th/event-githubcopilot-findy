@@ -1,5 +1,7 @@
+
 from todo_api.domain.entity.entity import Task
 from todo_api.memdb.memdb import MemDB
+from datetime import datetime
 
 
 class OperationInteractor:
@@ -11,6 +13,9 @@ class OperationInteractor:
 
     def create_task(self, task: Task) -> Task:
         task["done"] = False
+        if "created_at" not in task or task["created_at"] is None:
+            task["created_at"] = datetime.now()
+        task["completed_at"] = None
         self._db.add(task)
         return task
 
@@ -19,7 +24,7 @@ class OperationInteractor:
         if task is None:
             raise Exception("not found")
         task["done"] = True
-
+        if "completed_at" not in task or task["completed_at"] is None:
+            task["completed_at"] = datetime.now()
         self._db.update(task)
-
         return task

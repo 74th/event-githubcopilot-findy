@@ -8,16 +8,22 @@ class MemDB:
 
 
     def __init__(self):
+        from datetime import datetime
+        now = datetime.now()
         self._tasks: list[Task] = [
             {
                 "id": 0,
                 "text": "task1",
                 "done": False,
+                "created_at": now,
+                "completed_at": None,
             },
             {
                 "id": 1,
                 "text": "task2",
                 "done": False,
+                "created_at": now,
+                "completed_at": None,
             }
         ]
 
